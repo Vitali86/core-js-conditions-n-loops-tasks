@@ -378,13 +378,6 @@ function rotateMatrix(matrix) {
   return matrix;
 }
 
-// console.log(
-//   rotateMatrix([
-//     [1, 2, 3],
-//     [4, 5, 6],
-//     [7, 8, 9],
-//   ])
-// );
 /**
  * Sorts an array of numbers in ascending order in place.
  * Employ any sorting algorithm of your choice.
@@ -399,8 +392,42 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  const newArr = arr;
+
+  function change(arr3, i, j) {
+    const arr4 = arr3;
+    const temp = arr4[i];
+    arr4[i] = arr4[j];
+    arr4[j] = temp;
+  }
+
+  function part(arr2, left, right) {
+    const pivot = arr2[right];
+    let i = left - 1;
+
+    for (let j = left; j < right; j += 1) {
+      if (arr2[j] <= pivot) {
+        i += 1;
+        change(arr2, i, j);
+      }
+    }
+
+    change(arr2, i + 1, right);
+    return i + 1;
+  }
+
+  function quickSort(arr1, left = 0, right = arr1.length - 1) {
+    if (left < right) {
+      const partIndex = part(arr1, left, right);
+      quickSort(arr1, left, partIndex - 1);
+      quickSort(arr1, partIndex + 1, right);
+    }
+  }
+
+  quickSort(newArr);
+
+  return arr;
 }
 
 /**
